@@ -1,5 +1,10 @@
 ﻿<?php
 global $wpdb;
+
+if(!empty($_POST)) {
+    inititial_post();
+}
+
 //Mise en place de l'interface d'administration
 $flux ='<div class="wrap">';
 
@@ -57,6 +62,7 @@ if(empty($_GET['action'])) {
     }
 }
 else {
+
    $organigramme = '';
    $get_id_url = (!empty($_GET['id'])) ? '&id='.$_GET['id'] : '';
    $data = array(
@@ -99,7 +105,7 @@ else {
             if(isset($_GET['id'])) {
                 $query = 'SELECT * FROM '.$wpdb->prefix.WP_GL_ORG_TABLE_ORGANIGRAMME.' WHERE gl_org_id = '.qstr($_GET['id']).' ';
                 $result = $wpdb->get_row($query, 'ARRAY_A');
-                
+
                 // Si nous avons un résultat et que nous ne sommes pas en mode $_POST
                 if(!empty($result)) {
                     if(empty($_POST)) {
@@ -121,19 +127,19 @@ else {
     $error = array();   // Initialisation du tableau d'erreur
 
     // Gestion de l'enregistrement
-    
+
     if(!empty($_POST)) {
         // On vérifie que les données passé en $_POST sont bien rempli
         if(trim($_POST['org_titre']) == '' ) {
             $error[] = __('Le champ &laquo;Titre&raquo; est obligatoire.');
         }
-        
+
         if(trim($_POST['org_description']) == '' ) {
             $error[] = __('Le champ &laquo;Description&raquo; est obligatoire.');
         }
 
         // Si nous n'avons pas d'erreur
-        if(empty($error)) {            
+        if(empty($error)) {
             // Si nous sommes en mode add, enregistrement des données en base de données
             if($_GET['action'] == 'add') {
                 $query = "INSERT INTO ".$wpdb->prefix.WP_GL_ORG_TABLE_ORGANIGRAMME." ( titre, description, data) VALUES (".qstr($_POST['org_titre']).", ".qstr($_POST['org_description']).", ".qstr($_POST['org_structure']).")";
@@ -142,7 +148,7 @@ else {
             else if($_GET['action'] == 'edit') {
                 $query = "UPDATE ".$wpdb->prefix.WP_GL_ORG_TABLE_ORGANIGRAMME." SET titre = ".qstr($_POST['org_titre']).", description = ".qstr($_POST['org_description']).", data = ".qstr($_POST['org_structure'])." WHERE gl_org_id = ".qstr($_GET['id'])." ";
             }
-            
+
             $wpdb->query($query);   // Execution de l'enregistrement ou de la mise à jour
             // Redirection vers la page d'accueil
             wp_redirect(WP_GL_ORG_BASE_URL.'&register');
@@ -163,7 +169,6 @@ else {
     // Mise en place du formulaire d'ajout du nouvel organigramme
     $flux.='<form name="add_org" id="add_org" method="post" action="'.WP_GL_ORG_BASE_URL.'&action='.$_GET['action'].$get_id_url.'">';
     $flux.='    <div id="poststuff" class="metabox-holder has-right-sidebar">';
-
     $flux.='        <div class="stuffbox">';
     $flux.='            <h3><label for="org_titre">'.__('Titre').'</label></h3>';
     $flux.='            <div class="inside">';
@@ -177,16 +182,16 @@ else {
     $flux.='                <input type="text" name="org_description" value="'.$data['org_description'].'" id="org_description" tabindex="1">';
     $flux.='            </div>';
     $flux.='        </div>';
-    
+
     $flux.='        <div class="stuffbox">';
     $flux.='            <h3><label for="org_description">'.__('Gestion de l\'organigramme').'</label></h3>';
     $flux.='            <div class="inside">';
-    
+
     // Dans le cas ou nous n'avons aucune données pour l'organigramme
     $alt ='#TB_inline?height=300&amp;width=350&amp;inlineId=form_elem';
     $flux.='<p id="empty_org">'.__('Votre organigramme est vide').'&nbsp;<input type="button" class="thickbox" name="'.__('Ajouter').'" value="'.__('Ajouter').'" alt="'.$alt.'" /></p>';
     $flux.='<input type="button" class="view_actions" name="'.__('Afficher les actions').'" value="'.__('Afficher les actions').'" />';
-    
+
     if(empty($data['org_structure'])) {
         $flux.='<div id="view_org"></div>';
     }
@@ -194,7 +199,7 @@ else {
         // Construction de l'organigramme
         $flux.='<div id="view_org">'.$data['org_structure'].'</div>';
     }
-    
+
     $flux.='            </div>';
     $flux.='        </div>';
 

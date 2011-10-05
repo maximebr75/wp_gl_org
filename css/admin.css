@@ -12,3 +12,15 @@
 #primaryNav li li span input.del{position:absolute; left:187px}
 #primaryNav li li li span input{position:absolute; top:28px; left:88px}
 #primaryNav li li li span input.del{position:absolute; top:28px; left:137px}
+.my_error{
+border-width: 1px;
+border-style: solid;
+padding: 0 .6em;
+margin: 5px 15px 2px;
+-moz-border-radius: 3px;
+-khtml-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+background-color: #FFEBE8;
+border-color: #C00;
+}

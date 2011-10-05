@@ -64,23 +64,25 @@ function form_elem_org() {
     $flux.='    <div class="stuffbox metabox-holder" style="width:350px">';
     $flux.='        <h3><label>'.__('Nouvel élément').'</label></h3>';
     $flux.='        <div class="inside">';
-    
+    $flux.='            <div class="my_error" style="display:none" id="elem_error"><span>'.__('Veuillez saisir un Nom.').'</span></div>';
+
     if(!empty($field_elem)) {
         $flux.='<div class="field_org" style="display:none" id="choice_type_elem">';
         $flux.='<label title="enfant"><input type="radio" name="type_elem" value="'.__('enfant').'" checked="checked"> <span>Enfant</span></label>';
         $flux.='<label title="frere"><input type="radio" name="type_elem" value="'.__('frere').'"> <span>Frère</span></label>';
         $flux.='</div>';
-    
+
         foreach($field_elem as $k => $v) {
             $flux.='<div class="field_org">';
             if($v['type'] == 'text') {
                 $flux.='<label>'.$v['label'].'</label>';
                 $flux.='<input type="text" name="elem_'.$k.'" value="" class="elem_'.$k.'" tabindex="1">';
             }
-            
+
             $flux.='</div>';
         }
         $flux.='<input name="add_elem" type="button" class="button-primary" id="add_elem" tabindex="4" accesskey="p" value="'.__('Ajouter').'">';
+        $flux.='<input name="del_add" type="button" class="button-primary" id="del_add" tabindex="4" accesskey="p" value="'.__('Annuler').'">';
     }
     else {
         $flux.='<p>'.__('Problème lors de la récuperation des options.').'</p>';
@@ -88,6 +90,12 @@ function form_elem_org() {
     $flux.='        </div>';
     $flux.='    </div>';
     $flux.='</div>';
-    
+
     return $flux;
+}
+
+function inititial_post() {
+    foreach($_POST as $k => $v) {
+        $_POST[$k] = str_replace(array('\"', '\\\''), array('', ''), $v);
+    }
 }

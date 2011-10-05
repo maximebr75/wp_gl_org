@@ -15,7 +15,7 @@
             $(this).append($button.clone(), $button_del);
         });
         $('#choice_type_elem').show();
-        $('#empty_org').remove(); // On retire l'information votre organigramme et vide...
+        $('#empty_org').hide();
     }
 
     // Gestion de l'ajout d'un élément dans l'organigramme
@@ -25,8 +25,7 @@
         var $val_elem_name = $inside.find('.elem_name').val();
 
         if($val_elem_name.length === 0) {
-            $('#elem_error').remove();
-            $inside.prepend('<div class="error" id="elem_error"><span>Veuillez saisir un Nom.</span></div>');
+            $('#elem_error').show();
             return false;
         }
 
@@ -89,8 +88,13 @@
         $("#TB_closeWindowButton").trigger('click');
         $('.field_org input[type="text"]').val('');
         $('#choice_type_elem').show();
-        $('#empty_org').remove(); // On retire l'information votre organigramme et vide...
+        $('#empty_org').hide(); // On retire l'information votre organigramme et vide...
         display_org();
+    });
+
+    // Gestion du bouton d'annulation
+    $('#del_add').click(function() {
+        $("#TB_closeWindowButton").trigger('click');
     });
 
     // Gestion du click sur le bouton ajouter un élément
@@ -121,6 +125,10 @@
         // Cas ou nous avons aucun enfant mais ou nous avons des frères
         else if( ($del_elem_current.next().length != 0 || $del_elem_current.prev().length != 0) && $del_elem_current.children('ul').length === 0){
             $del_elem_current.remove();
+        }
+
+        if($('li.max_level').length === 0) {
+            $('#empty_org').show();
         }
         display_org();
     });
@@ -160,11 +168,9 @@
                 $multiple = $level - 3;
                 $this.next('li').css('marginLeft', ($multiple * $width_fixed) + 30);
                 $total_width += ($multiple * $width_fixed) + 60 + 300;
-                        console.log($total_width);
             } else {
                 $this.next('li').css('marginLeft', 0);
                 $total_width += 300;
-                        console.log($total_width);
             }
         });
 

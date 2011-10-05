@@ -1,0 +1,14 @@
+#add_org input[type="text"], .field_org  input[type="text"]{width: 100%;}
+#TB_ajaxContent .stuffbox{margin-top:10px}
+#TB_ajaxContent .stuffbox input[type="button"]{margin:10px;text-align:center}
+.field_org{padding:10px}
+.field_org input{float:right}
+.field_org label{display:block;padding-top:10px}
+#view_org{overflow:auto}
+.span_elem{position:relative}
+#view_org li span input{position:absolute; top:40px; left:188px}
+#view_org li span input.del{position:absolute; left:237px}
+#primaryNav li li span input{position:absolute; left:138px}
+#primaryNav li li span input.del{position:absolute; left:187px}
+#primaryNav li li li span input{position:absolute; top:28px; left:88px}
+#primaryNav li li li span input.del{position:absolute; top:28px; left:137px}

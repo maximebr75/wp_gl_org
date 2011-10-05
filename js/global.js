@@ -1,0 +1,30 @@
+jQuery(document).ready(function(){
+    var $ = jQuery;
+    var $total_width = 0;
+
+    /* GESTION DE L'AFFICHAGE DE L'ORGANNIGRAMME */
+    // Récuperation des éléments crées
+    $('.max_level').each(function() {
+        var $this     = $(this);
+        var $level    = $this.data('level');
+        var $multiple = 0;
+        var $width_fixed = 50;
+
+        // Si nous avons un level superieure ou egal à 3
+        // Alors on augmente le marge de l'élément frère
+        if($level >= 3) {
+            $multiple = $level - 3;
+            if($this.next().length > 0) {
+                $this.next().css('marginLeft', ($multiple * $width_fixed) + 10);
+                $total_width += ($multiple * $width_fixed) + 10 + 300;
+            }
+        }
+        else {
+            $total_width +=  300;
+        }
+    });
+
+    console.log($total_width);
+    $('#primaryNav').css('width', $total_width + 100);
+
+});

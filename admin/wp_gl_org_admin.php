@@ -179,7 +179,7 @@ else {
     $flux.='        <div class="stuffbox">';
     $flux.='            <h3><label for="org_description">'.__('Description').'</label></h3>';
     $flux.='            <div class="inside">';
-    $flux.='                <input type="text" name="org_description" value="'.$data['org_description'].'" id="org_description" tabindex="1">';
+    $flux.='                <textarea name="org_description" id="org_description" cols="100" rows="10">'.$data['org_description'].'</textarea>';
     $flux.='            </div>';
     $flux.='        </div>';
 

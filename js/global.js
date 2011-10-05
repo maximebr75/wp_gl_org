@@ -4,7 +4,7 @@ jQuery(document).ready(function(){
 
     /* GESTION DE L'AFFICHAGE DE L'ORGANNIGRAMME */
     // Récuperation des éléments crées
-    $('.max_level').each(function() {
+    $('#primaryNav > li').each(function() {
         var $this     = $(this);
         var $level    = $this.data('level');
         var $multiple = 0;
@@ -16,15 +16,17 @@ jQuery(document).ready(function(){
             $multiple = $level - 3;
             if($this.next().length > 0) {
                 $this.next().css('marginLeft', ($multiple * $width_fixed) + 10);
-                $total_width += ($multiple * $width_fixed) + 10 + 300;
+                $total_width += ($multiple * $width_fixed) + 60 + 300;
+            }
+            else {
+                $total_width +=  300;
             }
         }
         else {
             $total_width +=  300;
         }
-    });
 
-    console.log($total_width);
+    });
     $('#primaryNav').css('width', $total_width + 100);
 
 });

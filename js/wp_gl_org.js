@@ -21,18 +21,28 @@
     // Gestion de l'ajout d'un élément dans l'organigramme
     $('#add_elem').live('click', function() {
         // On vérifie que le titre est au moins présent
-        var $inside        = $(this).closest('.inside')
-        var $val_elem_name = $inside.find('.elem_name').val();
+        var $inside               = $(this).closest('.inside')
+        var $val_elem_name        = $inside.find('.elem_name').val();
+        var $val_elem_description = $inside.find('.elem_description').val();
+        var $fiche_information    = $('<div style="display:none"><div  class="info"></div></div>');
 
         if($val_elem_name.length === 0) {
             $('#elem_error').show();
             return false;
         }
+        else {
+            $fiche_information.children().append('<h1>'+$val_elem_name+'</h1>');
+        }
 
+        // Gestion de l'ajout de la description
+        if($val_elem_description.length > 0) {
+            $fiche_information.children().append('<p>'+$val_elem_description+'</p>');
+        }
         // On vérifie à quel niveau on ajoute l'élément.
         // Si il n'y a aucun élément alors on admet que nous sommes au niveau 1
         if($('#primaryNav').length === 0) {
             var $new_elem = $('<ul id="primaryNav" class="col3"><li id="create_elem" data-level="0" class="first_li max_level"><span class="span_elem">'+$val_elem_name+'</span></li></ul>');
+            $new_elem.children('li').append($fiche_information);
             $('#view_org').prepend($new_elem);
         }
         // Dans le cas ou le premier niveau est déjà défini
@@ -42,10 +52,12 @@
                 // Si il existe déjà un enfant, on ne recrée pas d'ul
                 if($elem_current.children('ul').length === 0) {
                     var $new_elem = $('<ul style="height:auto" class="clearfix"><li id="create_elem"><span class="span_elem">'+$val_elem_name+'</span></li></ul>');
+                    $new_elem.children('li').append($fiche_information);
                     $elem_current.append($new_elem); // Creation d'un élément enfant
 
                 }else {
                     var $new_elem = $('<li id="create_elem"><span class="span_elem">'+$val_elem_name+'</span></li>');
+                    $new_elem.append($fiche_information);
                     $elem_current.children('ul').append($new_elem);
                 }
 
@@ -72,7 +84,8 @@
                 }
             }
             else {
-                var $new_elem = $('<li id="create_elem"><span class="span_elem">'+$val_elem_name+'</span></li>')
+                var $new_elem = $('<li id="create_elem"><span class="span_elem">'+$val_elem_name+'</span></li>');
+                $new_elem.append($fiche_information);
                 $elem_current.after($new_elem); // Création d'un élément frère
 
                 // Dans le cas ou nous sommes en présence du premier "li" apres le primaryNav

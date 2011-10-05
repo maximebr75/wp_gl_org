@@ -2,7 +2,7 @@
 global $wpdb;
 
 if(!empty($_POST)) {
-    inititial_post();
+    //initial_post();
 }
 
 //Mise en place de l'interface d'administration
@@ -188,7 +188,7 @@ else {
     $flux.='            <div class="inside">';
 
     // Dans le cas ou nous n'avons aucune données pour l'organigramme
-    $alt ='#TB_inline?height=300&amp;width=350&amp;inlineId=form_elem';
+    $alt ='#TB_inline?height=360&amp;width=350&amp;inlineId=form_elem';
     $flux.='<p id="empty_org">'.__('Votre organigramme est vide').'&nbsp;<input type="button" class="thickbox" name="'.__('Ajouter').'" value="'.__('Ajouter').'" alt="'.$alt.'" /></p>';
     $flux.='<input type="button" class="view_actions" name="'.__('Afficher les actions').'" value="'.__('Afficher les actions').'" />';
 

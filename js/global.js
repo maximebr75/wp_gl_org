@@ -29,4 +29,11 @@ jQuery(document).ready(function(){
     });
     $('#primaryNav').css('width', $total_width + 100);
 
+    /* GESTION DE L'OUVERTURE AVEC COLORBOX */
+    $('.span_elem').colorbox({
+        html : function() {
+            var $flux = $(this).next();
+            return $flux.html();
+        }
+    });
 });

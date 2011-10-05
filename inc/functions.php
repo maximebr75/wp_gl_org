@@ -1,4 +1,15 @@
 ﻿<?php
+/*
+ * Fonction print_rh($v)
+ * -----
+ * Formatage de print_r (entouré par des balises pre)
+ * -----
+ * @global  mixed     $v                     valeur
+ * -----
+ * $Author: Maxime B $
+ * $Date: 2011-09-19 17:14 $
+ * $Copyright: GLOBALIS media systems $
+ */
 function print_rh($v) {
     echo '<pre>';
     print_r($v);
@@ -60,6 +71,7 @@ function qstr($value) {
 // Fonction permettant de créer le formulaire de création d'un élément de l'organigramme
 function form_elem_org() {
     $field_elem = get_option('wp_gl_org_option_field_elem');
+
     $flux = '<div id="form_elem" style="display:none">';
     $flux.='    <div class="stuffbox metabox-holder" style="width:350px">';
     $flux.='        <h3><label>'.__('Nouvel élément').'</label></h3>';
@@ -74,9 +86,20 @@ function form_elem_org() {
 
         foreach($field_elem as $k => $v) {
             $flux.='<div class="field_org">';
+
+            switch($v['type']) {
+                case 'text' :
+                    $flux.='<label>'.$v['label'].'</label>';
+                    $flux.='<input type="text" name="elem_'.$k.'" value="" class="elem_'.$k.'" tabindex="1">';
+                break;
+                case 'textarea' :
+                    $flux.='<label>'.$v['label'].'</label>';
+                    $flux.='<textarea name="elem_'.$k.'" cols="47" rows="5" class="elem_'.$k.'"></textarea>';
+                break;
+            }
+
             if($v['type'] == 'text') {
-                $flux.='<label>'.$v['label'].'</label>';
-                $flux.='<input type="text" name="elem_'.$k.'" value="" class="elem_'.$k.'" tabindex="1">';
+
             }
 
             $flux.='</div>';
@@ -94,7 +117,7 @@ function form_elem_org() {
     return $flux;
 }
 
-function inititial_post() {
+function initial_post() {
     foreach($_POST as $k => $v) {
         $_POST[$k] = str_replace(array('\"', '\\\''), array('', ''), $v);
     }

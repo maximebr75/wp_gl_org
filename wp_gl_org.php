@@ -51,12 +51,27 @@ function conditionally_add_scripts_and_styles($posts){
 	}
 
 	if ($shortcode_found) {
-         wp_enqueue_script('jquery');
+        wp_enqueue_script('jquery');
         $my_style_url  = plugins_url('css/slickmap.css', __FILE__);
         $my_style_file = WP_PLUGIN_DIR . '/wp_gl_org/css/slickmap.css';
         if(file_exists($my_style_file)) {
             wp_register_style('slickmap', $my_style_url);
             wp_enqueue_style( 'slickmap');
+        }
+
+         wp_enqueue_script('jquery');
+        $my_style_url  = plugins_url('css/colorbox.css', __FILE__);
+        $my_style_file = WP_PLUGIN_DIR . '/wp_gl_org/css/colorbox.css';
+        if(file_exists($my_style_file)) {
+            wp_register_style('colorbox', $my_style_url);
+            wp_enqueue_style( 'colorbox');
+        }
+
+        $my_script_url  = plugins_url('js/jquery.colorbox-min.js', __FILE__);
+        $my_script_file = WP_PLUGIN_DIR . '/wp_gl_org/js/jquery.colorbox-min.js';
+        if(file_exists($my_script_file)) {
+            wp_register_script('myScriptsCboxFront', $my_script_url);
+            wp_enqueue_script( 'myScriptsCboxFront');
         }
 
         $my_script_url  = plugins_url('js/global.js', __FILE__);
@@ -100,7 +115,7 @@ function wp_gl_org_install() {
             'label'=> 'Nom'
         ),
         'description' => array(
-            'type' => 'text',
+            'type' => 'textarea',
             'label'=> 'Description',
         ),
     );

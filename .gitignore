@@ -1,0 +1,22 @@
+#Fichiers inutiles de windows, mac et linux
+*.db
+.DS_Store
+*~
+._*
+
+#Fichiers Eclipse
+.cache
+.settings
+.buildpath
+.project
+nbproject/
+
+# fichiers pouvant contenir des configs
+/.htaccess
+include/config
+
+#compteur
+/compteur.txt
+
+# dossier pour les dossiers de candidature
+uploads/*

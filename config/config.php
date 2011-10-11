@@ -15,3 +15,4 @@ define('GB_SK_URL', WP_PLUGIN_URL.'/'.GB_SK_PATH);
  */
 define('GB_SK_DOMAIN', 'gl_org');
 define('WP_GL_ORG_TABLE_ORGANIGRAMME', 'gl_org');
+define('WP_GL_ORG_UPLOAD_PATH', GB_SK_COMPLETE_PATH.'/uploads/');

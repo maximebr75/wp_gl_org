@@ -6,6 +6,7 @@
     var $button_del = '<input type="button" class="del" name="Supprimer" value="Supprimer" />';
     var $data = [];
     var width = 0;
+    var $content_photo;
 
     display_org();
 
@@ -24,7 +25,8 @@
         var $inside               = $(this).closest('.inside')
         var $val_elem_name        = $inside.find('.elem_name').val();
         var $val_elem_description = $inside.find('.elem_description').val();
-        var $fiche_information    = $('<div style="display:none"><div  class="info"></div></div>');
+
+        var $fiche_information    = $('<div style="display:none"><div class="info"></div></div>');
 
         if($val_elem_name.length === 0) {
             $('#elem_error').show();
@@ -38,8 +40,10 @@
         if($val_elem_description.length > 0) {
             $fiche_information.children().append('<p>'+$val_elem_description+'</p>');
         }
+
         // On vérifie à quel niveau on ajoute l'élément.
         // Si il n'y a aucun élément alors on admet que nous sommes au niveau 1
+
         if($('#primaryNav').length === 0) {
             var $new_elem = $('<ul id="primaryNav" class="col3"><li id="create_elem" data-level="0" class="first_li max_level"><span class="span_elem">'+$val_elem_name+'</span></li></ul>');
             $new_elem.children('li').append($fiche_information);
@@ -59,6 +63,7 @@
                     var $new_elem = $('<li id="create_elem"><span class="span_elem">'+$val_elem_name+'</span></li>');
                     $new_elem.append($fiche_information);
                     $elem_current.children('ul').append($new_elem);
+
                 }
 
                 // Gestion des levels
@@ -72,7 +77,9 @@
                         $level = $level.replace('clearfix level-', '');
                         $new_level = parseInt($level) + 1;
 
-                        $new_elem.attr('class', 'clearfix level-'+$new_level);
+                        if($new_elem[0].tagName == 'ul') {
+                            $new_elem.attr('class', 'clearfix level-'+$new_level);
+                        }
 
                         // Gestion du data du premier li
                         if($new_elem.closest('.max_level').data('level') < $new_level) {
@@ -86,6 +93,7 @@
             else {
                 var $new_elem = $('<li id="create_elem"><span class="span_elem">'+$val_elem_name+'</span></li>');
                 $new_elem.append($fiche_information);
+
                 $elem_current.after($new_elem); // Création d'un élément frère
 
                 // Dans le cas ou nous sommes en présence du premier "li" apres le primaryNav
@@ -96,10 +104,23 @@
             }
         }
 
+        /* Gestion de l'upload de la photo */
+        $('#upload_photo').submit();
+        $content_photo = $('#upload_target');
+        $tmp = $content_photo;
+        //reg = '`\<div class\=\"\path_photo"\>($)\<\\div\>`';
+        //tab = $tmp.match(reg);
+        console.log($tmp.Document.getElementByTagName('div'));
+
+        //$new_elem.attr('data-pathphoto', $path_photo);
+
+
         $('#create_elem span').append($button.clone(), $button_del).removeAttr('id');
         // On ferme la fenêtre de création et on purge les données contenu dans les champs input
-        $("#TB_closeWindowButton").trigger('click');
+        //$("#TB_closeWindowButton").trigger('click');
         $('.field_org input[type="text"]').val('');
+        $('.field_org textarea').val('');
+        $('#upload_photo').val('');
         $('#choice_type_elem').show();
         $('#empty_org').hide(); // On retire l'information votre organigramme et vide...
         display_org();
@@ -188,5 +209,25 @@
         });
 
         $('#primaryNav').css('width', $total_width + 100);
+    }
+
+    // Fonction permettant la gestion de l'upload
+    function startUpload(){
+        $('#f1_upload_process').show();
+        return true;
+    }
+
+    function stopUpload(success){
+        var result = '';
+        if (success == 1){
+            document.getElementById('result').innerHTML =
+            '<span class="msg">The file was uploaded successfully!<\/span><br/><br/>';
+        }
+        else {
+            document.getElementById('result').innerHTML =
+            '<span class="emsg">There was an error during file upload!<\/span><br/><br/>';
+        }
+        document.getElementById('f1_upload_process').style.visibility = 'hidden';
+        return true;
     }
 });

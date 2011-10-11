@@ -2,8 +2,12 @@
 global $wpdb;
 
 if(!empty($_POST)) {
-    //initial_post();
+    initial_post();
 }
+
+// Gestion des photos s'il y en a
+require GB_SK_COMPLETE_PATH.'/inc/upload_photo.php';
+$upload = wp_upload_dir();
 
 //Mise en place de l'interface d'administration
 $flux ='<div class="wrap">';
@@ -188,7 +192,7 @@ else {
     $flux.='            <div class="inside">';
 
     // Dans le cas ou nous n'avons aucune données pour l'organigramme
-    $alt ='#TB_inline?height=360&amp;width=350&amp;inlineId=form_elem';
+    $alt ='#TB_inline?height=430&amp;width=350&amp;inlineId=form_elem';
     $flux.='<p id="empty_org">'.__('Votre organigramme est vide').'&nbsp;<input type="button" class="thickbox" name="'.__('Ajouter').'" value="'.__('Ajouter').'" alt="'.$alt.'" /></p>';
     $flux.='<input type="button" class="view_actions" name="'.__('Afficher les actions').'" value="'.__('Afficher les actions').'" />';
 
@@ -208,6 +212,7 @@ else {
     $flux.='    </div>';
     $flux.='            <input type="hidden" name="org_structure" value="" id="org_structure">';
     $flux.='</form>';
+
     $flux.= form_elem_org();
 }
 

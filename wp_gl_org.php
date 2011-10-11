@@ -118,6 +118,10 @@ function wp_gl_org_install() {
             'type' => 'textarea',
             'label'=> 'Description',
         ),
+        'photo' => array(
+            'type' => 'upload',
+            'label'=> 'Photo',
+        ),
     );
     add_option('wp_gl_org_option_field_elem', $fields_elem);
 

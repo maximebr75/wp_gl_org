@@ -96,10 +96,13 @@ function form_elem_org() {
                     $flux.='<label>'.$v['label'].'</label>';
                     $flux.='<textarea name="elem_'.$k.'" cols="47" rows="5" class="elem_'.$k.'"></textarea>';
                 break;
-            }
-
-            if($v['type'] == 'text') {
-
+                case 'upload' :
+                    $flux.='<form id="upload_photo" action="'.WP_GL_ORG_BASE_URL.'&action='.$_GET['action'].$get_id_url.'&upload_photo" method="post" enctype="multipart/form-data" target="upload_target" >';
+                    $flux.='<label>'.$v['label'].'</label>';
+                    $flux.='<input id="upload_'.$k.'" type="file" size="36" name="upload_'.$k.'" value="" />';
+                    $flux.='</form>';
+                    $flux.='<iframe id="upload_target" name="upload_target" src="#" style="width:100;height:100;border:0px solid #fff;"></iframe>';
+                break;
             }
 
             $flux.='</div>';
@@ -119,6 +122,12 @@ function form_elem_org() {
 
 function initial_post() {
     foreach($_POST as $k => $v) {
-        $_POST[$k] = str_replace(array('\"', '\\\''), array('', ''), $v);
+        $_POST[$k] = str_replace(array('\\', ''), array('', ''), $v);
     }
+}
+
+function generate_name_photo() {
+    $value = 'wp_gl_org_photo_'.uniqid();
+
+    return $value;
 }
